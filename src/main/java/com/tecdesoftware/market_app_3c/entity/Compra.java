@@ -1,6 +1,9 @@
 package com.tecdesoftware.market_app_3c.entity;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name="compras")
