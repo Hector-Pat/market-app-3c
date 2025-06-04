@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.List;
 @Entity
 @Table(name="Clientes")
 public class Cliente {
@@ -19,7 +20,12 @@ public class Cliente {
     private String direccion;
     private String email;
     @Collumn(name="correo_electronico")
-    private String correoElectronico
+    private String correoElectronico;
+
+    // depende de compra
+    @OneToMany(mappedBy = "cliente")
+    private List<Compra> compras;
+
 
     public int getId() {
         return id;

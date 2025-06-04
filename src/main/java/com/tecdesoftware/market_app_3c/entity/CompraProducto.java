@@ -1,9 +1,6 @@
 package com.tecdesoftware.market_app_3c.entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.*;
 import jakarta.persistence.Entity;
-import jakarta.persistence.entity;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name ="compras_productos")
@@ -12,6 +9,17 @@ public class CompraProducto {
     //ID PENDIENTE
     @EmbeddedId
     private CompraProductoPK id;
+    private Integer cantidad;
+    private Double compra;
+    private Boolean estado;
+
+    //Saber todos los productos que hay en la compra
+    @ManyToOne
+    @JoinColumn(name= "id_compra", insertable = false, updatable = false)
+    private Compra compra;
+    @ManyToOne
+    @JoinColumn(name= "id_producto", insertable = false, updatable = false)
+    private Producto producto;
 
     public CompraProductoPK getId() {
         return id;
@@ -45,7 +53,5 @@ public class CompraProducto {
         this.estado = estado;
     }
 
-    private Integer cantidad;
-    private Double compra;
-    private Boolean estado;
+
 }

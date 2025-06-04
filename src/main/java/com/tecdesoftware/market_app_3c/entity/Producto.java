@@ -1,36 +1,44 @@
 package com.tecdesoftware.market_app_3c.entity;
-import com.fasterxml.jackson.annotation.JsonTypeId;
+
 import jakarta.persistence.*;
-import jakarta.persistence.Column;
+
 @Entity
 @Table(name="productos")
 public class Producto {
-    @Id//ES LA LLAVE PRIMARIA
-    //Auto genera ids utoincrementables
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Column(name="id_Producto")
-    private int idProducto;
+    @Id //Es la llave primaria
+    //Autogenera ID autoincrementables
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id_producto")
+    private Integer idProducto;
+
+    //Si se llama la tabla de la BD y la de aqui son iguales, no se necesita poner el @Column(name=" ")
     private String nombre;
 
     @Column(name = "id_categoria")
     private Integer idCategoria;
 
-    @Column(name="codigo_barras")
+    @Column(name = "codigo_barras")
     private String codigoBarras;
 
     @Column(name="precio_venta")
     private Double precioVenta;
 
-    @Column(name="cantidad_stocks")
-    private Integer cantidadStocks;
+    @Column(name = "cantidad_stock")
+    private Integer cantidadStock;
+
     private Boolean estado;
 
-    public int getIdProducto() {
+    //Agregamos las relaciones
+    @ManyToOne
+    @JoinColumn(name="id_categoria", insertable=false, updatable=false)
+    private Categoria categoria;
+
+    public Integer getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(int idProducto) {
+    public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -66,12 +74,12 @@ public class Producto {
         this.precioVenta = precioVenta;
     }
 
-    public Integer getCantidadStocks() {
-        return cantidadStocks;
+    public Integer getCantidadStock() {
+        return cantidadStock;
     }
 
-    public void setCantidadStocks(Integer cantidadStocks) {
-        this.cantidadStocks = cantidadStocks;
+    public void setCantidadStock(Integer cantidadStock) {
+        this.cantidadStock = cantidadStock;
     }
 
     public Boolean getEstado() {
@@ -82,4 +90,3 @@ public class Producto {
         this.estado = estado;
     }
 }
-

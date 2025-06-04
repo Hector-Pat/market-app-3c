@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonTypeId;
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -28,6 +29,15 @@ public class Compra {
 
     private Boolean estado;
 
+    //Relación con cliente; muchas compras para un cliente
+    @ManyToOne
+    //Insertable/Updatable en false es para que no haya modificaciones, solo relacionarlas
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+    private Cliente cliente;
+
+    //una compra tiene muchos productos
+    @OneToMany(mappedBy = "compra")
+    private List<CompraProducto> productos;
     public int getIdCompra() {
         return idCompra;
     }
