@@ -1,5 +1,5 @@
 package com.tecdesoftware.market_app_3c.entity;
-package com.tecdesoftware.market_app_3c.entity;
+
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
@@ -19,7 +19,7 @@ public class Cliente {
     private Long celular;
     private String direccion;
     private String email;
-    @Collumn(name="correo_electronico")
+    @Column(name="correo_electronico")
     private String correoElectronico;
 
     // depende de compra

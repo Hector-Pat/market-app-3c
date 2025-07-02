@@ -34,10 +34,7 @@ public class Compra {
     //Insertable/Updatable en false es para que no haya modificaciones, solo relacionarlas
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
-
-    //una compra tiene muchos productos
-    @OneToMany(mappedBy = "compra")
-    private List<CompraProducto> productos;
+    
     public int getIdCompra() {
         return idCompra;
     }

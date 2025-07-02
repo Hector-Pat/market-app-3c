@@ -16,7 +16,7 @@ public class CompraProducto {
     //Saber todos los productos que hay en la compra
     @ManyToOne
     @JoinColumn(name= "id_compra", insertable = false, updatable = false)
-    private Compra compra;
+    private Compra compras;
     @ManyToOne
     @JoinColumn(name= "id_producto", insertable = false, updatable = false)
     private Producto producto;
