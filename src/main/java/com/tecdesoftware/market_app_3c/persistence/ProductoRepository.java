@@ -1,31 +1,66 @@
 package com.tecdesoftware.market_app_3c.persistence;
 
+import com.tecdesoftware.market_app_3c.domain.Product;
+import com.tecdesoftware.market_app_3c.domain.repository.ProductRepository;
 import com.tecdesoftware.market_app_3c.persistence.crud.ProductoCrudRepository;
 import com.tecdesoftware.market_app_3c.entity.Producto;
+import com.tecdesoftware.market_app_3c.persistence.mapper.ProductMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-//Le dice a spring este archivo se enlaza con la Base de Datos "decorador"
+//Esta anotación le dice a Spring que este archivo se enlaza con la BD
 @Repository
-public class ProductoRepository {
+public class ProductoRepository implements ProductRepository {
 
+    //Auto inyectado: Spring se encarga de crear la instancia
+    @Autowired
     private ProductoCrudRepository productoCrudRepository;
+    @Autowired
+    private ProductMapper productMapper;
 
-    public List<Producto> getAll() {
-        return (List<Producto>) productoCrudRepository.findAll();
+    //Equivalente a poner Select * from productos
+    @Override
+    public List<Product> getAll() {
+        //Se castea de Iterable a Lista
+        List<Producto> productos = (List<Producto>) productoCrudRepository.findAll();
+        return productMapper.toProducts(productos);
     }
 
-    public List<Producto> getByCategoria(int idCategoria) {
-        return productoCrudRepository.findByIdCategoriaOrderByNombreASC(idCategoria);
+    @Override
+    public Optional<List<Product>> getByCategory(int categoryId) {
+        List<Producto> productos = productoCrudRepository.findByIdCategoriaOrderByNombreDesc(categoryId);
+        return Optional.of(productMapper.toProducts(productos));
     }
 
-    public Optional<List<Producto>> getEscasos(int cantidad) {
-        return productoCrudRepository.findByCantidadStockLessThanAndEstado(cantidad, true);
+    @Override
+    public Optional<List<Product>> getScarseProducts(int quantity) {
+        Optional<List<Producto>> productos = productoCrudRepository.findByCantidadStockLessThanAndEstado(quantity, true);
+        //No hay un mapper que convierta una lista de opcionales, por lo que a los productos se le hará un map
+        return productos.map(prods -> productMapper.toProducts(prods));
     }
+
+    //Obtener un producto dado el id
+    @Override
+    public Optional<Product> getProduct(int productId) {
+        return productoCrudRepository.findById(productId).map(producto -> productMapper.toProduct(producto));
+    }
+
     //Guardar un producto
-    public Producto save(Producto producto){
-        return productoCrudRepository.save(producto);
+    @Override
+    public Product save(Product product) {
+        Producto producto = productMapper.toProducto(product);
+        return productMapper.toProduct(productoCrudRepository.save(producto));
     }
-    
+
+
+    //Eliminar producto por IdProducto
+    @Override
+    public void delete(int productId) {
+        productoCrudRepository.deleteById(productId);
+    }
+
+
+
 }
