@@ -9,9 +9,9 @@ import org.mapstruct.Mappings;
 
 import java.util.List;
 
-//Se usa "uses" porque se tiene el atributo category que a su vez tiene su propio Mapper
 @Mapper(componentModel = "spring", uses = CategoryMapper.class)
 public interface ProductMapper {
+
     @Mappings({
             @Mapping(source = "idProducto", target = "productId"),
             @Mapping(source = "nombre", target = "name"),
@@ -21,10 +21,13 @@ public interface ProductMapper {
             @Mapping(source = "categoria", target = "category")
     })
     Product toProduct(Producto producto);
+
     List<Product> toProducts(List<Producto> productos);
 
     @InheritInverseConfiguration
-    @Mapping(target = "codigoBarras", ignore = true)
+    @Mappings({
+            @Mapping(target = "codigoBarras", ignore = true),
+            @Mapping(source = "categoryId", target = "idCategoria")
+    })
     Producto toProducto(Product product);
-
 }
