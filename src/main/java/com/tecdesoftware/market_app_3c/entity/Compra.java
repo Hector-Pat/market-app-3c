@@ -29,12 +29,24 @@ public class Compra {
 
     private Boolean estado;
 
+
     //Relación con cliente; muchas compras para un cliente
-    @ManyToOne
+
+    @OneToMany(mappedBy = "compra")
+    private List<CompraProducto> productos;
+
+    public List<CompraProducto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<CompraProducto> productos) {
+        this.productos = productos;
+    }
+
     //Insertable/Updatable en false es para que no haya modificaciones, solo relacionarlas
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
-    private Cliente cliente;
-    
+
+
     public int getIdCompra() {
         return idCompra;
     }
@@ -90,4 +102,6 @@ public class Compra {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
+
+
 }
