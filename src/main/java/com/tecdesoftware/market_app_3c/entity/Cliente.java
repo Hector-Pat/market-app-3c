@@ -12,13 +12,14 @@ public class Cliente {
     @Id//ES LA LLAVE PRIMARIA
     //Auto genera ids utoincrementables
     //@GeneratedValue no va porque el ID será la CURP
-    private int id;
-    private Integer nombre;
-    private String apellido;
+    @Column(name = "id")
+    private String id;
+    private String nombre;
+    private String apellidos;
     //private Integer celular;
     private Long celular;
     private String direccion;
-    private String email;
+
     @Column(name="correo_electronico")
     private String correoElectronico;
 
@@ -27,28 +28,28 @@ public class Cliente {
     private List<Compra> compras;
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Integer getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(Integer nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getApellidos() {
+        return apellidos;
     }
 
     public void setApellido(String apellido) {
-        this.apellido = apellido;
+        this.apellidos = apellido;
     }
 
     public Long getCelular() {
@@ -67,13 +68,7 @@ public class Cliente {
         this.direccion = direccion;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getCorreoElectronico() {
         return correoElectronico;

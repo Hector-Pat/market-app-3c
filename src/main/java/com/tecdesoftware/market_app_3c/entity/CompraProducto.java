@@ -1,26 +1,26 @@
 package com.tecdesoftware.market_app_3c.entity;
+
 import jakarta.persistence.*;
-import jakarta.persistence.Entity;
 
 @Entity
-@Table(name ="compras_productos")
+@Table(name="compras_productos")
 public class CompraProducto {
-
-    //ID PENDIENTE
     @EmbeddedId
     private CompraProductoPK id;
+    //ID Pendiente
+
     private Integer cantidad;
-    private Double compra;
+    private Double total;
     private Boolean estado;
 
-    //Saber todos los productos que hay en la compra
+    //Conocer todos los productos que hay en una compra
     @ManyToOne
-    // Corrección
     @MapsId("idCompra")
-    @JoinColumn(name= "id_compra", insertable = false, updatable = false)
-    private Compra compras;
+    @JoinColumn (name="id_compra",insertable = false, updatable = false)
+    private Compra compra;
+
     @ManyToOne
-    @JoinColumn(name= "id_producto", insertable = false, updatable = false)
+    @JoinColumn (name="id_producto",insertable = false, updatable = false)
     private Producto producto;
 
     public CompraProductoPK getId() {
@@ -39,12 +39,12 @@ public class CompraProducto {
         this.cantidad = cantidad;
     }
 
-    public Double getCompra() {
-        return compra;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setCompra(Double compra) {
-        this.compra = compra;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     public Boolean getEstado() {
@@ -55,5 +55,19 @@ public class CompraProducto {
         this.estado = estado;
     }
 
+    public Compra getCompra() {
+        return compra;
+    }
 
+    public void setCompra(Compra compra) {
+        this.compra = compra;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
 }

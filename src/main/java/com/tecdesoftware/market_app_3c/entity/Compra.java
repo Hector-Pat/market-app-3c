@@ -1,107 +1,61 @@
 package com.tecdesoftware.market_app_3c.entity;
-import com.fasterxml.jackson.annotation.JsonTypeId;
+
 import jakarta.persistence.*;
-import jakarta.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Entity
-@Table(name="compras")
+@Table(name = "compras")
 public class Compra {
-    @Id//ES LA LLAVE PRIMARIA
-    //Auto genera ids utoincrementables
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_compra")
     private int idCompra;
-    private String nombre;
 
     @Column(name = "id_cliente")
     private String idCliente;
 
     private LocalDateTime fecha;
 
-    @Column(name = "medio_pago")
+    @Column(name = "medio_pago", length = 1)
     private String medioPago;
 
-    private Integer comentario;
+    private String comentario; // corregido desde Integer
 
-    private Boolean estado;
+    @Column(length = 1)
+    private String estado; // corregido desde Boolean
 
-
-    //Relación con cliente; muchas compras para un cliente
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+    private Cliente cliente;
 
     @OneToMany(mappedBy = "compra")
     private List<CompraProducto> productos;
 
-    public List<CompraProducto> getProductos() {
-        return productos;
-    }
+    // Getters y Setters
 
-    public void setProductos(List<CompraProducto> productos) {
-        this.productos = productos;
-    }
+    public int getIdCompra() { return idCompra; }
+    public void setIdCompra(int idCompra) { this.idCompra = idCompra; }
 
-    //Insertable/Updatable en false es para que no haya modificaciones, solo relacionarlas
-    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+    public String getIdCliente() { return idCliente; }
+    public void setIdCliente(String idCliente) { this.idCliente = idCliente; }
 
+    public LocalDateTime getFecha() { return fecha; }
+    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
 
-    public int getIdCompra() {
-        return idCompra;
-    }
+    public String getMedioPago() { return medioPago; }
+    public void setMedioPago(String medioPago) { this.medioPago = medioPago; }
 
-    public void setIdCompra(int idCompra) {
-        this.idCompra = idCompra;
-    }
+    public String getComentario() { return comentario; }
+    public void setComentario(String comentario) { this.comentario = comentario; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public String getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getMedioPago() {
-        return medioPago;
-    }
-
-    public void setMedioPago(String medioPago) {
-        this.medioPago = medioPago;
-    }
-
-    public Integer getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(Integer comentario) {
-        this.comentario = comentario;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-
+    public List<CompraProducto> getProductos() { return productos; }
+    public void setProductos(List<CompraProducto> productos) { this.productos = productos; }
 }

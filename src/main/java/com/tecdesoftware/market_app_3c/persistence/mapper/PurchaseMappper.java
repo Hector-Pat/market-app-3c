@@ -21,7 +21,7 @@ public interface PurchaseMappper {
             @Mapping(source = "medioPago", target = "paymentMethod"),
             @Mapping(source = "comentario", target = "comment"),
             @Mapping(source = "estado", target = "state"),
-            @Mapping(source = "Productos", target = "items")
+            @Mapping(source = "productos", target = "items")
 
     })
 
@@ -31,7 +31,7 @@ public interface PurchaseMappper {
 
     //hacer la inversa:
     @InheritInverseConfiguration
-    @Mapping(target = "cliente", ignore = true)
+    @Mapping(target = "idCliente", ignore = true)
     Compra toCompra(Purchase purchase);
 }
 

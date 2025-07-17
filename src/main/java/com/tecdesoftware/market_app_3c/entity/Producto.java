@@ -5,14 +5,13 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="productos")
 public class Producto {
+    @Id //Indica llave primaria
+    //autogenera IDs autoincrementables
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_producto")
+    private int idProducto;
 
-    @Id //Es la llave primaria
-    //Autogenera ID autoincrementables
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id_producto")
-    private Integer idProducto;
-
-    //Si se llama la tabla de la BD y la de aqui son iguales, no se necesita poner el @Column(name=" ")
+    // si coincide la variable no se agrega Column
     private String nombre;
 
     @Column(name = "id_categoria")
@@ -21,7 +20,7 @@ public class Producto {
     @Column(name = "codigo_barras")
     private String codigoBarras;
 
-    @Column(name="precio_venta")
+    @Column(name = "precio_venta")
     private Double precioVenta;
 
     @Column(name = "cantidad_stock")
@@ -29,16 +28,17 @@ public class Producto {
 
     private Boolean estado;
 
-    //Agregamos las relaciones
+    // Relación con cliente: muchos pruductos para una categoría
     @ManyToOne
+    //insertable y updateble en false es para que no haya modificaciones
     @JoinColumn(name="id_categoria", insertable=false, updatable=false)
     private Categoria categoria;
 
-    public Integer getIdProducto() {
+    public int getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(Integer idProducto) {
+    public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
 
